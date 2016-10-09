@@ -26,22 +26,16 @@
  
 function uniteddomains_getConfigArray() {
 	$configarray = array(
-     "FriendlyName" => array("Type" => "System", "Value"=>"UnitedDomains (UD-Reselling)"),
-//   "Description" => array("Type" => "System", "Value"=>"Not Got a HEXONET Account? Get one here: <a href='https://www.hexonet.net/sign-up' target='_blank'>www.hexonet.net/sign-up</a>"),
+	"FriendlyName" => array("Type" => "System", "Value"=>"UnitedDomains (UD-Reselling)"),
+	 "Description" => array(
+	 "Type" => "System",
+	 "Value" => "Created by <a href=\"http://www.quyu.net\" target=\"_blank\">QuYu.net</a>. For more information visit our <a href=\"https://github.com/quyunet\" target=\"_blank\">Open source</a>"
+	 ),
 	 "Username" => array( "Type" => "text", "Size" => "20", "Description" => "Enter your ISPAPI Login ID", ),
 	 "Password" => array( "Type" => "password", "Size" => "20", "Description" => "Enter your ISPAPI Password ", ),
 	 "UseSSL" => array( "Type" => "yesno", "Description" => "Use HTTPS for API Connections" ),
 	 "TestMode" => array( "Type" => "yesno", "Description" => "Connect to OT&amp;E (Test Environment)" ),
-	 //"ProxyServer" => array( "Type" => "text", "Description" => "Optional (HTTP(S) Proxy Server)" ),
-//	 "SyncNextDueDate" => array( "Type" => "yesno", "Description" => "Deprecated (ispapisync.php should not be used anymore)" ),
-	 //"ConvertIDNs" => array( "Type" => "dropdown", "Options" => "API,PHP", "Default" => "API", "Description" => "Use API or PHP function (idn_to_ascii)" ),
 	);
-
-	/*
-	if ( !function_exists('idn_to_ascii') ) {
-		$configarray["ConvertIDNs"] = array( "Type" => "dropdown", "Options" => "API", "Default" => "API", "Description" => "Use API (PHP function idn_to_ascii not available)" );
-	}
-	*/
 	return $configarray;
 }
 
