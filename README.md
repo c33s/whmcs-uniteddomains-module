@@ -19,6 +19,6 @@ Module Features:
 15. Domain Cron Synchronization
 
 Extension function, Check domain availability
-Use: Edit /includes/whoisservers.php      //Less than 6 versions
-Add Line: .xx|http://yourdomain.com/query/CheckDomain.php?domain=|HTTPREQUEST-Available
-Notice: .xx is the extension of the domain name you specified, be sure to replace it.
+|Use: Edit /includes/whoisservers.php      //Less than 6 versions
+|Add Line: .xx|http://yourdomain.com/query/CheckDomain.php?domain=|HTTPREQUEST-Available
+|Notice: .xx is the extension of the domain name you specified, be sure to replace it.
