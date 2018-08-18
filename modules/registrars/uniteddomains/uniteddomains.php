@@ -31,8 +31,8 @@ function uniteddomains_getConfigArray() {
 	 "Type" => "System",
 	 "Value" => "Created by <a href=\"http://www.quyu.net\" target=\"_blank\">QuYu.net</a>. For more information visit our <a href=\"https://github.com/quyunet\" target=\"_blank\">Open source</a>"
 	 ),
-	 "Username" => array( "Type" => "text", "Size" => "20", "Description" => "Enter your ISPAPI Login ID", ),
-	 "Password" => array( "Type" => "password", "Size" => "20", "Description" => "Enter your ISPAPI Password ", ),
+	 "Username" => array( "Type" => "text", "Size" => "20", "Description" => "Enter Your UnitedDomains Reseller Login ID", ),
+	 "Password" => array( "Type" => "password", "Size" => "20", "Description" => "Enter your UnitedDomains Reseller Password ", ),
 	 "UseSSL" => array( "Type" => "yesno", "Description" => "Use HTTPS for API Connections" ),
 	 "TestMode" => array( "Type" => "yesno", "Description" => "Connect to OT&amp;E (Test Environment)" ),
 	);
@@ -757,7 +757,7 @@ function uniteddomains_use_additionalfields($params, &$command) {
 
 	$found_additionalfield_mapping = 0;
 	foreach ( $myadditionalfields as $field_index => $field ) {
-		if ( isset($field["Ispapi-Name"]) || isset($field["Ispapi-Eval"]) ) {
+		if ( isset($field["UnitedDomains-Name"]) || isset($field["UnitedDomains-Eval"]) ) {
 			$found_additionalfield_mapping = 1;
 		}
 	}
@@ -770,16 +770,16 @@ function uniteddomains_use_additionalfields($params, &$command) {
 	}
 
 	foreach ( $myadditionalfields as $field_index => $field ) {
-		if ( !is_array($field["Ispapi-Replacements"]) ) {
-			$field["Ispapi-Replacements"] = array();
+		if ( !is_array($field["UnitedDomains-Replacements"]) ) {
+			$field["UnitedDomains-Replacements"] = array();
 		}
 
-		if ( isset($field["Ispapi-Options"]) && isset($field["Options"]) )  {
+		if ( isset($field["UnitedDomains-Options"]) && isset($field["Options"]) )  {
 			$options = explode(",", $field["Options"]);
-			foreach ( explode(",", $field["Ispapi-Options"]) as $index => $new_option ) {
+			foreach ( explode(",", $field["UnitedDomains-Options"]) as $index => $new_option ) {
 				$option = $options[$index];
-				if ( !isset($field["Ispapi-Replacements"][$option]) ) {
-					$field["Ispapi-Replacements"][$option] = $new_option;
+				if ( !isset($field["UnitedDomains-Replacements"][$option]) ) {
+					$field["UnitedDomains-Replacements"][$option] = $new_option;
 				}
 			}
 		}
@@ -793,25 +793,25 @@ function uniteddomains_use_additionalfields($params, &$command) {
 			$value = $params['additionalfields'][$field["Name"]];
 
 			$ignore_countries = array();
-			if ( isset($field["Ispapi-IgnoreForCountries"]) ) {
-				foreach ( explode(",", $field["Ispapi-IgnoreForCountries"]) as $country ) {
+			if ( isset($field["UnitedDomains-IgnoreForCountries"]) ) {
+				foreach ( explode(",", $field["UnitedDomains-IgnoreForCountries"]) as $country ) {
 					$ignore_countries[strtoupper($country)] = 1;
 				}
 			}
 
 			if ( !$ignore_countries[strtoupper($params["country"])] ) {
 
-				if ( isset($field["Ispapi-Replacements"][$value]) ) {
-					$value = $field["Ispapi-Replacements"][$value];
+				if ( isset($field["UnitedDomains-Replacements"][$value]) ) {
+					$value = $field["UnitedDomains-Replacements"][$value];
 				}
 
-				if ( isset($field["Ispapi-Eval"]) ) {
-					eval($field["Ispapi-Eval"]);
+				if ( isset($field["UnitedDomains-Eval"]) ) {
+					eval($field["UnitedDomains-Eval"]);
 				}
 
-				if ( isset($field["Ispapi-Name"]) ) {
+				if ( isset($field["UnitedDomains-Name"]) ) {
 					if ( strlen($value) ) {
-						$command[$field["Ispapi-Name"]] = $value;
+						$command[$field["UnitedDomains-Name"]] = $value;
 					}
 				}
 			}
@@ -827,80 +827,12 @@ function uniteddomains_TransferDomain($params) {
 	$domain = $params["sld"].".".$params["tld"];
 	//$values["error"] = "";
 
-	/*
-	$registrant = array(
-		"FIRSTNAME" => $params["firstname"],
-		"LASTNAME" => $params["lastname"],
-		"ORGANIZATION" => $params["companyname"],
-		"STREET" => $params["address1"],
-		"CITY" => $params["city"],
-		"STATE" => $params["state"],
-		"ZIP" => $params["postcode"],
-		"COUNTRY" => $params["country"],
-		"PHONE" => $params["phonenumber"],
-		"EMAIL" => $params["email"]
-	);
-	if ( strlen($params["address2"]) ) {
-		$registrant["STREET"] .= " , ".$params["address2"];
-	}
-
-	$admin = array(
-		"FIRSTNAME" => $params["adminfirstname"],
-		"LASTNAME" => $params["adminlastname"],
-		"ORGANIZATION" => $params["admincompanyname"],
-		"STREET" => $params["adminaddress1"],
-		"CITY" => $params["admincity"],
-		"STATE" => $params["adminstate"],
-		"ZIP" => $params["adminpostcode"],
-		"COUNTRY" => $params["admincountry"],
-		"PHONE" => $params["adminphonenumber"],
-		"EMAIL" => $params["adminemail"]
-	);
-	if ( strlen($params["adminaddress2"]) ) {
-		$admin["STREET"] .= " , ".$params["adminaddress2"];
-	}
-
-	$contact_id = array(
-		"OWNERCONTACT0" => "",
-		"ADMINCONTACT0" => "",
-		"TECHCONTACT0" => "",
-		"BILLINGCONTACT0" => "",
-	);
-	$contact_info = array(
-		"OWNERCONTACT0" => $registrant,
-		"ADMINCONTACT0" => $admin,
-		"TECHCONTACT0" => $admin,
-		"BILLINGCONTACT0" => $admin,
-	);
-	foreach($contact_info as $key=>$val){
-		$contact_cmd = $val;
-		$contact_cmd["COMMAND"] = 'AddContact';
-		$contact_cmd["NEW"] = '1';
-		$contact_resp = uniteddomains_call($contact_cmd, uniteddomains_config($origparams));
-		if ( !($contact_resp["CODE"] == 200) ) {
-			$values["error"] = $contact_resp["DESCRIPTION"];
-			return $values;
-		}else{
-			$contact_id[$key] = $contact_resp["PROPERTY"]["CONTACT"][0];
-		}
-	}
-	*/
-
 	$command = array(
 		"COMMAND" => "TransferDomain",
 		"DOMAIN" => $domain,
-		//"PERIOD" => $origparams["regperiod"],
-		//"NAMESERVER0" => $params["ns1"],
-		//"NAMESERVER1" => $params["ns2"],
-		//"NAMESERVER2" => $params["ns3"],
-		//"NAMESERVER3" => $params["ns4"],
-		//"OWNERCONTACT0" => $contact_id["OWNERCONTACT0"],
-		//"ADMINCONTACT0" => $contact_id["ADMINCONTACT0"],
-		//"TECHCONTACT0" => $contact_id["TECHCONTACT0"],
-		//"BILLINGCONTACT0" => $contact_id["BILLINGCONTACT0"],
 		"AUTH" => $origparams["transfersecret"],
 		"ACTION" => "request",
-	);//print_r($command);
+	);
 
 	//don't send owner admin tech billing contact for .CA domains
 	if (preg_match('/[.]ca$/i', $domain) || preg_match('/[.]us$/i', $domain)) {
@@ -1260,46 +1192,6 @@ function uniteddomains_call_raw($command, $config) {
 		$args["s_entity"] = $config["entity"];
 	$args["s_command"] = uniteddomains_encode_command($command);
 
-	# Convert IDNs via API
-	/*
-	if ( 1 ) {
-		$new_command = array();
-		foreach ( explode("\n", $args["s_command"]) as $line ) {
-			if ( preg_match('/^([^\=]+)\=(.*)/', $line, $m) ) {
-				$new_command[strtoupper(trim($m[1]))] = trim($m[2]);
-			}
-		}
-		if ( strtoupper($new_command["COMMAND"]) != "CONVERTIDN" ) {
-			$replace = array();
-			$domains = array();
-			foreach ( $new_command as $k => $v ) {
-				if ( preg_match('/^(DOMAIN|NAMESERVER|DNSZONE)([0-9]*)$/i', $k) ) {
-					if ( preg_match('/[^a-z0-9\.\- ]/i', $v) ) {
-						$replace[] = $k;
-						$domains[] = $v;
-					}
-				}
-			}
-			if ( count($replace) ) {
-				if ( $config["idns"] == "PHP" ) {
-					foreach ( $replace as $index => $k ) {
-						$new_command[$k] = uniteddomains_to_punycode($new_command[$k]);
-					}
-				}
-				else {
-					$r = uniteddomains_call(array("COMMAND" => "ConvertIDN", "DOMAIN" => $domains), $config);
-					if ( ($r["CODE"] == 200) && isset($r["PROPERTY"]["ACE"]) ) {
-						foreach ( $replace as $index => $k ) {
-							$new_command[$k] = $r["PROPERTY"]["ACE"][$index];
-						}
-						$args["s_command"] = uniteddomains_encode_command($new_command);
-					}
-				}
-			}
-		}
-	}
-	*/
-
 	$config["curl"] = curl_init($url);
 	if ( $config["curl"] === FALSE ) {
 		return "[RESPONSE]\nCODE=423\nAPI access error: curl_init failed\nEOF\n";
@@ -1318,7 +1210,7 @@ function uniteddomains_call_raw($command, $config) {
 	if ( strlen($config["proxy"]) ) {
 		curl_setopt( $config["curl"], CURLOPT_PROXY, $config["proxy"] );
 	}
-	curl_setopt($config["curl"], CURLOPT_USERAGENT, "ISPAPI/$uniteddomains_module_version WHMCS/".$GLOBALS["CONFIG"]["Version"]." PHP/".phpversion()." (".php_uname("s").")");
+	curl_setopt($config["curl"], CURLOPT_USERAGENT, "UnitedDomains/$uniteddomains_module_version WHMCS/".$GLOBALS["CONFIG"]["Version"]." PHP/".phpversion()." (".php_uname("s").")");
 	curl_setopt($config["curl"], CURLOPT_REFERER, $GLOBALS["CONFIG"]["SystemURL"]);
 	$response = curl_exec($config["curl"]);
 
