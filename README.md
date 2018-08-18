@@ -3,23 +3,23 @@ UnitedDomains Registrar For WHMCS
 
 <b>1. Main Module Features:</b>
 
-1). Register Domain
-2). Transfer Domain
-3). Renew Domain
-4). Delete Domain
-5). Get Contact Details
-6). Modify Contact Details
-7). Get EPP Code
-8). Get DNS Records
-9). Save DNS Records
-10). Get Nameservers
-11). Save Nameservers
-12). Register Nameservers
-13). Modify Nameservers
-14). Delete Nameservers
-15). Get Registrar Lock
-16). Save Registrar Lock
-17). Domain Cron Synchronization
+1). Register Domain</br>
+2). Transfer Domain</br>
+3). Renew Domain</br>
+4). Delete Domain</br>
+5). Get Contact Details</br>
+6). Modify Contact Details</br>
+7). Get EPP Code</br>
+8). Get DNS Records</br>
+9). Save DNS Records</br>
+10). Get Nameservers</br>
+11). Save Nameservers</br>
+12). Register Nameservers</br>
+13). Modify Nameservers</br>
+14). Delete Nameservers</br>
+15). Get Registrar Lock</br>
+16). Save Registrar Lock</br>
+17). Domain Cron Synchronization</br>
 
 <b>2. Extension function, Check domain availability</b>
 
