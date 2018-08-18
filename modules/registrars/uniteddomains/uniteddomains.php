@@ -1,6 +1,6 @@
 <?php
-//API Documents: https://ote.domainreselling.de/v2/download/API-Manual.pdf
-//PHP_API_Example: https://ote.domainreselling.de/v2/download/PHP_API_Example.zip
+# API Documents: https://domainreselling.de/download/API_Manual.pdf
+# PHP_API_Example: https://domainreselling.de/download/PHP_API_Example.zip
 
 /* ***********************************************************************
  * Customization Development Services by QuYu.Net                        *
