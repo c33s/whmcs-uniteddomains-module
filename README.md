@@ -1,7 +1,7 @@
 # whmcs-uniteddomains-module
 UnitedDomains Registrar For WHMCS
 
-1). Main Module Features:
+<b>1). Main Module Features:</b>
 
 1. Register Domain
 2. Transfer Domain
@@ -20,7 +20,7 @@ UnitedDomains Registrar For WHMCS
 14. Save Registrar Lock
 15. Domain Cron Synchronization
 
-2). Extension function, Check domain availability
+<b>2). Extension function, Check domain availability</b>
 
 Use: Edit /includes/whoisservers.php      //Less than 6 versions
 
