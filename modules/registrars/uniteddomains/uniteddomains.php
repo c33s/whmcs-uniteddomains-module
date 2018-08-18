@@ -4,7 +4,7 @@
 
 /* ***********************************************************************
  * Customization Development Services by QuYu.Net                        *
- * Copyright (c) ShenZhen QuYu Tech CO.,LTD, All Rights Reserved         *
+ * Copyright (c) Yunfu QuYu Tech CO.,LTD, All Rights Reserved         *
  * (2013-09-23, 12:16:25)                                                *
  *                                                                       *
  *                                                                       *
