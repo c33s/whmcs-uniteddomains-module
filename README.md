@@ -24,6 +24,6 @@ UnitedDomains Registrar For WHMCS
 
 Use: Edit /includes/whoisservers.php      //Less than 6 versions
 
-Add Line: .xx|http://yourdomain.com/query/CheckDomain.php?domain=|HTTPREQUEST-Available
+Add Line: <code>.xx|http://yourdomain.com/query/CheckDomain.php?domain=|HTTPREQUEST-Available</code>
 
 Notice: .xx is the extension of the domain name you specified, be sure to replace it.
