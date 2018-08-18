@@ -76,9 +76,6 @@ function uniteddomains_SaveRegistrarLock($params) {
 	return $values;
 }
 
-
-
-
 function uniteddomains_GetEPPCode($params) {
 	$domain = $params["sld"].".".$params["tld"];
 	//$values["error"] = "";
@@ -132,7 +129,6 @@ function uniteddomains_GetNameservers($params) {
 	return $values;
 }
 
-
 function uniteddomains_SaveNameservers($params) {
 	$domain = $params["sld"].".".$params["tld"];
 	//$values["error"] = "";
@@ -162,9 +158,6 @@ function uniteddomains_SaveNameservers($params) {
 	}
 	return $values;
 }
-
-
-
 
 function uniteddomains_GetDNS($params) {
 	$dnszone = $params["sld"].".".$params["tld"].".";
@@ -246,7 +239,6 @@ function uniteddomains_GetDNS($params) {
 	}
 	return $hostrecords;
 }
-
 
 function uniteddomains_SaveDNS($params) {
 	//print_r($params);
@@ -338,14 +330,12 @@ function uniteddomains_SaveDNS($params) {
 	}
 
 	$response = uniteddomains_call($command, uniteddomains_config($params));
-//print_r($command);print_r($response);exit;
+	//print_r($command);print_r($response);exit;
 	if ( $response["CODE"] != 200 ) {
 		$values["error"] = $response["DESCRIPTION"];
 	}
 	return $values;
 }
-
-
 
 function uniteddomains_GetEmailForwarding($params) {
 	$dnszone = $params["sld"].".".$params["tld"].".";
@@ -547,7 +537,6 @@ function uniteddomains_SaveContactDetails($params) {
 	return $values;
 }
 
-
 function uniteddomains_RegisterNameserver($params) {
 	$nameserver = $params["nameserver"];
 	//$values["error"] = "";
@@ -595,7 +584,6 @@ function uniteddomains_DeleteNameserver($params) {
 	return $values;
 }
 
-
 function uniteddomains_IDProtectToggle($params) {
 	$domain = $params["sld"].".".$params["tld"];
 	//$values["error"] = "";
@@ -610,7 +598,6 @@ function uniteddomains_IDProtectToggle($params) {
 	}
 	return $values;
 }
-
 
 function uniteddomains_RegisterDomain($params) {
     $origparams = $params;
@@ -693,42 +680,10 @@ function uniteddomains_RegisterDomain($params) {
 	);
 	//print_r($command);//exit;
 
-//没有这个选项
-	//if ( $params["dnsmanagement"] ) {
-	//	$command["INTERNALDNS"] = 1;
-	//}
-
-	//if ( $params["idprotection"] ) {
-	//	$command["X-ACCEPT-WHOISTRUSTEE-TAC"] = 1;
-	//}
-
-//没有这个选项
-	//uniteddomains_use_additionalfields($params, $command);
-
-	//print_r($command);exit;
 	$response = uniteddomains_call($command, uniteddomains_config($origparams));
-//print_r($response);
+	//print_r($response);
 	if ( !($response["CODE"] == 200) ) {
 		$values["error"] = $response["DESCRIPTION"];
-	}else{
-		/*
-		//再指定一次联系人
-		$domain = $params["sld"].".".$params["tld"];
-		//$values["error"] = "";
-		$command = array(
-			"COMMAND" => "ModifyDomain",
-			"DOMAIN" => $domain,
-			"OWNERCONTACT0" => $contact_id["OWNERCONTACT0"],
-			"ADMINCONTACT0" => $contact_id["ADMINCONTACT0"],
-			"TECHCONTACT0" => $contact_id["TECHCONTACT0"],
-			"BILLINGCONTACT0" => $contact_id["BILLINGCONTACT0"],
-		);
-		$response = uniteddomains_call($command, uniteddomains_config($params));
-		if ( $response["CODE"] != 200 ) {
-			$values["error"] = $response["DESCRIPTION"];
-			return $values;
-		}
-		*/
 	}
 	return $values;
 }
@@ -819,7 +774,6 @@ function uniteddomains_use_additionalfields($params, &$command) {
 	}
 }
 
-
 function uniteddomains_TransferDomain($params) {
     $origparams = $params;
 	$params = uniteddomains_get_utf8_params($params);
@@ -884,7 +838,6 @@ function uniteddomains_RenewDomain($params) {
 	return $values;
 }
 
-
 function uniteddomains_ReleaseDomain($params) {
 	$domain = $params["sld"].".".$params["tld"];
 	//$values["error"] = "";
@@ -899,8 +852,6 @@ function uniteddomains_ReleaseDomain($params) {
 	}
 	return $values;
 }
-
-
 
 function uniteddomains_RequestDelete($params) {
 	$domain = $params["sld"].".".$params["tld"];
@@ -968,8 +919,6 @@ function uniteddomains_TransferSync($params) {
 	}
 	return $values;
 }
-
-
 
 function uniteddomains_Sync($params) {
 	$domain = $params["sld"].".".$params["tld"];
@@ -1087,8 +1036,6 @@ function uniteddomains_get_utf8_params($params) {
 	return $params;
 }
 
-
-
 function uniteddomains_get_contact_info($contact, &$params) {
 	if ( isset($params["_contact_hash"][$contact]) )
 		return $params["_contact_hash"][$contact];
@@ -1139,7 +1086,6 @@ function uniteddomains_get_contact_info($contact, &$params) {
 	return $values;
 }
 
-
 function uniteddomains_logModuleCall($registrar, $action, $requeststring, $responsedata, $processeddata = NULL, $replacevars = NULL) {
 	if ( !function_exists('logModuleCall') ) {
 		return;
@@ -1163,12 +1109,8 @@ function uniteddomains_config($params) {
 		$mreg_config = array('socket' => $url.'?s_login='.$user.'&s_pw='.$pass);
 	}
 
-
-
-
 	return $mreg_config;
 }
-
 
 function uniteddomains_call($command, $config) {
 	$oMREG = new mreg;
@@ -1176,7 +1118,6 @@ function uniteddomains_call($command, $config) {
 
 	//return uniteddomains_parse_response(uniteddomains_call_raw($command, $config));
 }
-
 
 function uniteddomains_call_raw($command, $config) {
 	global $uniteddomains_module_version;
@@ -1225,7 +1166,6 @@ function uniteddomains_call_raw($command, $config) {
 	return $response;
 }
 
-
 function uniteddomains_to_punycode($domain) {
 	if ( !strlen($domain) ) return $domain;
 	if ( preg_match('/^[a-z0-9\.\-]+$/i', $domain) ) {
@@ -1239,7 +1179,6 @@ function uniteddomains_to_punycode($domain) {
 	}
 	return $domain;
 }
-
 
 function uniteddomains_encode_command( $commandarray ) {
     if (!is_array($commandarray)) return $commandarray;
@@ -1259,8 +1198,6 @@ function uniteddomains_encode_command( $commandarray ) {
     }
     return $command;
 }
-
-
 
 function uniteddomains_parse_response ( $response ) {
     if (is_array($response)) return $response;
@@ -1301,8 +1238,7 @@ function uniteddomains_parse_response ( $response ) {
     return $hash;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 /**
  * @staticvar GLOBAL_STREAM_TIMEOUT Timeout (in Sec.) for Socket-Stream
@@ -1554,6 +1490,5 @@ class mreg extends mregTools {
 	} // end func mreg_call_raw
 
 } // end class mreg
-
 
 ?>
